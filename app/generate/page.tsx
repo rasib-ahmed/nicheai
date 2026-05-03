@@ -1,25 +1,3 @@
-// Yeh file ke bilkul TOP pe — "use client" se PEHLE
-export const metadata = {
-  title: "Generate Your 7-Day Content Calendar",
-  description:
-    "Enter your niche, pick your platform, choose your tone — and get 7 days of AI-generated captions, hashtags, and a cover image in 20 seconds.",
-  openGraph: {
-    title: "Generate Your 7-Day Content Calendar — NichePost AI",
-    description:
-      "AI-powered content calendar generator. Free, no signup required.",
-    url: "https://nichepost.ai/generate",
-  },
-  twitter: {
-    title: "Generate Your 7-Day Content Calendar — NichePost AI",
-    description: "Free AI content calendar in 20 seconds.",
-  },
-  alternates: {
-    canonical: "https://nichepost.ai/generate",
-  },
-};
-
-"use client";
-// ... baaki code same rehta hai
 "use client";
 
 import { useState } from "react";
@@ -121,7 +99,6 @@ export default function GeneratePage() {
         select option { background: #050d1a; color: #f8fafc; }
         select { color-scheme: dark; }
 
-        /* ── RESPONSIVE ── */
         .gen-topbar-inner { padding: 0 40px; }
         .gen-main-layout {
           max-width: 1280px;
@@ -133,34 +110,21 @@ export default function GeneratePage() {
           align-items: start;
         }
         .gen-form-sticky { position: sticky; top: 84px; }
-        .gen-days-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-          gap: 14px;
-        }
+        .gen-days-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
         .gen-empty-state { height: 480px; }
         .gen-loading-state { height: 480px; }
 
         @media (max-width: 900px) {
-          .gen-main-layout {
-            grid-template-columns: 1fr !important;
-            padding: 24px 20px !important;
-            gap: 24px !important;
-          }
-          .gen-form-sticky {
-            position: relative !important;
-            top: 0 !important;
-          }
+          .gen-main-layout { grid-template-columns: 1fr !important; padding: 24px 20px !important; gap: 24px !important; }
+          .gen-form-sticky { position: relative !important; top: 0 !important; }
           .gen-empty-state { height: 320px !important; }
           .gen-loading-state { height: 320px !important; }
         }
-
         @media (max-width: 768px) {
           .gen-topbar-inner { padding: 0 20px !important; }
           .gen-main-layout { padding: 20px 16px !important; gap: 20px !important; }
           .gen-days-grid { grid-template-columns: 1fr 1fr !important; }
         }
-
         @media (max-width: 540px) {
           .gen-days-grid { grid-template-columns: 1fr !important; }
           .gen-form-card-inner { padding: 20px 18px !important; }
@@ -169,14 +133,13 @@ export default function GeneratePage() {
           .gen-result-header { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
           .cover-img-header { flex-wrap: wrap; gap: 8px !important; }
         }
-
         @media (max-width: 400px) {
           .gen-main-layout { padding: 16px 12px !important; }
           .gen-topbar-inner { padding: 0 14px !important; }
         }
       `}</style>
 
-      {/* ── TOP BAR ── */}
+      {/* TOP BAR */}
       <div className="gen-topbar" style={{ position: "sticky", top: 0, zIndex: 20, background: "rgba(5,13,26,0.95)", backdropFilter: "blur(20px)", borderBottom: "1px solid rgba(14,165,233,0.1)" }}>
         <div className="gen-topbar-inner" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
           <Link href="/" style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", display: "flex", alignItems: "center", gap: 6, textDecoration: "none", transition: "color 0.2s", flexShrink: 0 }}
@@ -196,14 +159,13 @@ export default function GeneratePage() {
         </div>
       </div>
 
-      {/* ── MAIN LAYOUT ── */}
+      {/* MAIN LAYOUT */}
       <div className="gen-main-layout">
 
-        {/* ── FORM CARD ── */}
+        {/* FORM CARD */}
         <div className="gen-form-sticky">
           <div className="gen-form-card" style={{ background: "rgba(14,165,233,0.04)", border: "1px solid rgba(14,165,233,0.15)", borderRadius: 24, overflow: "hidden", animation: "morphGlow 6s ease-in-out infinite" }}>
 
-            {/* Header */}
             <div className="gen-form-header" style={{ padding: "28px 28px 22px", borderBottom: "1px solid rgba(14,165,233,0.1)", background: "rgba(14,165,233,0.04)", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: "linear-gradient(90deg,transparent,rgba(125,211,252,0.6),transparent)", animation: "scanH 6s ease-in-out infinite" }} />
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
@@ -215,7 +177,6 @@ export default function GeneratePage() {
               <p style={{ fontSize: 13, color: "rgba(125,211,252,0.5)", lineHeight: 1.5 }}>3 inputs. 7 days of content. Ready in 20 seconds.</p>
             </div>
 
-            {/* Form */}
             <form onSubmit={generate} className="gen-form-card-inner" style={{ padding: "24px 28px", display: "flex", flexDirection: "column", gap: 20 }}>
 
               {/* Niche */}
@@ -297,7 +258,6 @@ export default function GeneratePage() {
 
               <div style={{ height: 1, background: "rgba(14,165,233,0.1)" }} />
 
-              {/* Submit */}
               <button type="submit"
                 disabled={loading || !niche.trim() || !platform || !tone}
                 className="gen-submit-btn"
@@ -315,14 +275,13 @@ export default function GeneratePage() {
               </button>
 
               {error && (
-                <div style={{ padding: "12px 16px", borderRadius: 12, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)", color: "#fca5a5", fontSize: 13, display: "flex", alignItems: "center", gap: 8, animation: "fadeUp 0.3s ease-out both" }}>
+                <div style={{ padding: "12px 16px", borderRadius: 12, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.25)", color: "#fca5a5", fontSize: 13, display: "flex", alignItems: "center", gap: 8 }}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
                   {error}
                 </div>
               )}
             </form>
 
-            {/* Form footer */}
             <div className="gen-form-footer" style={{ padding: "14px 28px", borderTop: "1px solid rgba(14,165,233,0.1)", display: "flex", alignItems: "center", justifyContent: "center", gap: 20, flexWrap: "wrap" }}>
               {["Free to use", "No signup needed", "Ready in 20s"].map(item => (
                 <div key={item} className="footer-badge" style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11, color: "rgba(125,211,252,0.35)" }}>
@@ -334,10 +293,8 @@ export default function GeneratePage() {
           </div>
         </div>
 
-        {/* ── OUTPUT AREA ── */}
+        {/* OUTPUT AREA */}
         <div>
-
-          {/* Empty state */}
           {!days.length && !loading && (
             <div className="gen-empty-state" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(14,165,233,0.02)", border: "1px dashed rgba(14,165,233,0.15)", borderRadius: 24, color: "rgba(125,211,252,0.25)", gap: 12, padding: "40px 20px" }}>
               <div className="empty-state-icon" style={{ width: 56, height: 56, borderRadius: 16, background: "rgba(14,165,233,0.06)", border: "1px solid rgba(14,165,233,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -348,7 +305,6 @@ export default function GeneratePage() {
             </div>
           )}
 
-          {/* Loading */}
           {loading && (
             <div className="gen-loading-state" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16, color: "rgba(125,211,252,0.4)" }}>
               <div style={{ position: "relative" }}>
@@ -360,11 +316,8 @@ export default function GeneratePage() {
             </div>
           )}
 
-          {/* ── RESULTS ── */}
           {days.length > 0 && (
             <div className="output-results">
-
-              {/* Header */}
               <div className="gen-result-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20, gap: 12, flexWrap: "wrap" }}>
                 <div>
                   <div className="calendar-header-title" style={{ fontSize: 20, fontWeight: 800, letterSpacing: "-0.02em" }}>Your 7-Day Calendar</div>
@@ -376,7 +329,6 @@ export default function GeneratePage() {
                 <CopyBtn text={days.map(d => `--- Day ${d.day}: ${d.title} ---\n${d.caption}\n\n${d.hashtags.map(h => `#${h}`).join(" ")}`).join("\n\n")} />
               </div>
 
-              {/* AI COVER IMAGE */}
               <div className="cover-img-card" style={{ borderRadius: 20, overflow: "hidden", background: "rgba(14,165,233,0.04)", border: "1px solid rgba(14,165,233,0.15)", marginBottom: 20 }}>
                 <div className="cover-img-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "14px 20px", borderBottom: "1px solid rgba(14,165,233,0.1)", gap: 8, flexWrap: "wrap" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, fontWeight: 600, color: "rgba(125,211,252,0.6)" }}>
@@ -406,15 +358,10 @@ export default function GeneratePage() {
                     </div>
                   </div>
                 )}
-                {coverImg && !imgLoading && (
-                  <img src={coverImg} alt="AI Cover" style={{ width: "100%", maxHeight: 260, objectFit: "cover", display: "block" }} />
-                )}
-                {!imgLoading && !coverImg && (
-                  <div style={{ height: 60, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, color: "rgba(125,211,252,0.2)" }}>Image unavailable</div>
-                )}
+                {coverImg && !imgLoading && <img src={coverImg} alt="AI Cover" style={{ width: "100%", maxHeight: 260, objectFit: "cover", display: "block" }} />}
+                {!imgLoading && !coverImg && <div style={{ height: 60, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, color: "rgba(125,211,252,0.2)" }}>Image unavailable</div>}
               </div>
 
-              {/* ── 7 DAY CARDS ── */}
               <div className="gen-days-grid">
                 {days.map((d, i) => {
                   const fullText = `${d.caption}\n\n${d.hashtags.map(h => `#${h}`).join(" ")}`;
@@ -422,7 +369,6 @@ export default function GeneratePage() {
                     <div key={d.day} className="day-result-card"
                       style={{ background: "rgba(14,165,233,0.04)", border: "1px solid rgba(14,165,233,0.12)", borderRadius: 18, overflow: "hidden", animationDelay: `${i * 0.07}s` }}
                     >
-                      {/* Card top */}
                       <div style={{ padding: "14px 16px 12px", borderBottom: "1px solid rgba(14,165,233,0.08)" }}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
                           <div className="day-num-badge" style={{ width: 38, height: 38, borderRadius: 10, background: "rgba(14,165,233,0.18)", border: "1px solid rgba(14,165,233,0.3)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
@@ -433,8 +379,6 @@ export default function GeneratePage() {
                         </div>
                         <div style={{ fontSize: 13, fontWeight: 700, color: "#f8fafc", lineHeight: 1.4 }}>{d.title}</div>
                       </div>
-
-                      {/* Card body */}
                       <div style={{ padding: "13px 16px" }}>
                         <div style={{ fontSize: 10, fontWeight: 700, color: "rgba(125,211,252,0.35)", textTransform: "uppercase", letterSpacing: "0.09em", marginBottom: 6 }}>Caption</div>
                         <div style={{ fontSize: 12, color: "rgba(255,255,255,0.55)", lineHeight: 1.65, marginBottom: 13, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" } as React.CSSProperties}>{d.caption}</div>
@@ -443,13 +387,9 @@ export default function GeneratePage() {
                           {d.hashtags.slice(0, 6).map((h, hi) => (
                             <span key={h} className="hashtag-tag" style={{ fontSize: 10, padding: "3px 7px", borderRadius: 5, background: "rgba(14,165,233,0.12)", color: "#7dd3fc", fontWeight: 500, animationDelay: `${hi * 0.05}s` }}>#{h}</span>
                           ))}
-                          {d.hashtags.length > 6 && (
-                            <span style={{ fontSize: 10, padding: "3px 7px", borderRadius: 5, background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)" }}>+{d.hashtags.length - 6}</span>
-                          )}
+                          {d.hashtags.length > 6 && <span style={{ fontSize: 10, padding: "3px 7px", borderRadius: 5, background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.3)" }}>+{d.hashtags.length - 6}</span>}
                         </div>
                       </div>
-
-                      {/* Card footer */}
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: "1px solid rgba(14,165,233,0.08)", padding: "10px 16px" }}>
                         <span style={{ fontSize: 10, color: "rgba(125,211,252,0.3)" }}>{d.caption.length} chars</span>
                         <CopyBtn text={fullText} />
@@ -458,7 +398,6 @@ export default function GeneratePage() {
                   );
                 })}
               </div>
-
             </div>
           )}
         </div>
