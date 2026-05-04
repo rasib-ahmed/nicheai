@@ -1,366 +1,309 @@
-"use client";
+import { notFound } from "next/navigation";
 
-import Link from "next/link";
-import { useParams } from "next/navigation";
+const BLOGS = [
+  {
+    slug: "how-to-build-content-calendar",
+    cat: "Strategy", catColor: "#3b82f6", emoji: "✍️",
+    title: "How to Build a Content Calendar That Gets Engagement",
+    excerpt: "A content calendar is your strategic weapon for building an audience that cares.",
+    author: "James Lee", authorColor: "#3b82f6", date: "May 1, 2026", read: "5 min read",
+    body: `
+      <p>A content calendar is your strategic weapon for building an audience that cares. Most creators treat it like a chore, but top creators treat it like a product roadmap.</p>
+      <h2>Start with your audience</h2>
+      <p>Before planning a single post, write down three things: who your ideal follower is, what problem they have, and what transformation you offer. Every post should connect to at least one of these.</p>
+      <h2>The 3-2-2 formula</h2>
+      <p>Plan 3 educational posts, 2 entertaining posts, and 2 personal posts per week. This mix keeps your audience educated, entertained, and emotionally connected.</p>
+      <ul>
+        <li>Educational: tutorials, tips, how-tos</li>
+        <li>Entertaining: relatable content, trends, challenges</li>
+        <li>Personal: your story, wins, behind the scenes</li>
+      </ul>
+      <h2>Batch your creation</h2>
+      <p>Set aside one day per week to write all captions and prepare visuals. This removes daily decision fatigue and keeps you consistent even on your busiest days.</p>
+      <h2>Tools that help</h2>
+      <p>Use NichePost AI to generate your entire week in seconds. Then schedule using Buffer or Later. Review analytics every two weeks and adjust based on what performed best.</p>
+      <h2>The key insight</h2>
+      <p>Consistency beats quality every single time for new creators. Show up daily and improve as you go. Your audience rewards consistency far more than occasional perfection.</p>
+    `,
+  },
+  {
+    slug: "instagram-vs-tiktok-2026",
+    cat: "Instagram", catColor: "#e1306c", emoji: "📱",
+    title: "Instagram vs TikTok: Where Should Your Niche Live in 2026?",
+    excerpt: "Choosing the wrong platform is the number one reason creators burn out.",
+    author: "Ahmed Malik", authorColor: "#8b5cf6", date: "Apr 28, 2026", read: "7 min read",
+    body: `
+      <p>Choosing the wrong platform is the number one reason creators burn out. You can make incredible content and still fail if it lands in the wrong place.</p>
+      <h2>Instagram in 2026</h2>
+      <p>Instagram is still king for lifestyle, fashion, food, travel, and B2B niches. Its audience skews slightly older and spends more money. Reels now dominate reach, but carousels still perform exceptionally well for educational content.</p>
+      <ul>
+        <li>Best for: visual niches, product-based businesses, coaching</li>
+        <li>Content format: Reels, carousels, Stories</li>
+        <li>Posting frequency: 4-5x per week for best results</li>
+      </ul>
+      <h2>TikTok in 2026</h2>
+      <p>TikTok has the most democratic algorithm in social media. A brand new account can go viral on day one. It rewards raw, authentic, entertaining content above everything else.</p>
+      <ul>
+        <li>Best for: entertainment, food, fitness, finance, education</li>
+        <li>Content format: vertical video only</li>
+        <li>Posting frequency: daily or even 2x per day</li>
+      </ul>
+      <h2>Our recommendation</h2>
+      <p>Start on one platform, master it, then expand. If you are video-comfortable, start on TikTok. If you prefer visuals and writing, start on Instagram. Do not split your energy across both until you have 10,000 followers on one.</p>
+    `,
+  },
+  {
+    slug: "hashtag-mistakes-killing-reach",
+    cat: "Strategy", catColor: "#3b82f6", emoji: "🚀",
+    title: "The 3 Hashtag Mistakes Killing Your Reach",
+    excerpt: "Hashtags are one of the most misunderstood tools in social media.",
+    author: "Sara Khan", authorColor: "#10b981", date: "Apr 22, 2026", read: "4 min read",
+    body: `
+      <p>Hashtags are one of the most misunderstood tools in social media. Done right, they can put your content in front of thousands of new people. Done wrong, they actively hurt your reach.</p>
+      <h2>Mistake 1: Using hashtags that are too big</h2>
+      <p>If you use a hashtag with 50 million posts, your content will be buried in seconds. Nobody will ever find it. Instead, use a mix of small under 100K posts, medium 100K to 1M posts, and large 1M to 5M posts hashtags.</p>
+      <h2>Mistake 2: Using the same hashtags every post</h2>
+      <p>Platforms penalise repetitive hashtag sets. They read it as spam behaviour. Create 5 to 6 different hashtag groups and rotate them. Each group should be themed around a different aspect of your niche.</p>
+      <h2>Mistake 3: Ignoring niche hashtags</h2>
+      <p>The best hashtags are the specific ones your ideal audience actually follows. Instead of using fitness with 200 million posts, try homeworkoutroutine or fitnessmotivation2026. Niche hashtags have smaller but far more engaged communities.</p>
+      <ul>
+        <li>Use 20-30 hashtags per Instagram post</li>
+        <li>Use 3-5 hashtags per TikTok video</li>
+        <li>Always include at least 3 niche-specific tags</li>
+      </ul>
+    `,
+  },
+  {
+    slug: "10-content-ideas-zero-inspiration",
+    cat: "AI Tools", catColor: "#f59e0b", emoji: "💡",
+    title: "10 Content Ideas When You Have Zero Inspiration",
+    excerpt: "Every creator hits a wall. Here are 10 proven content ideas that work in almost any niche.",
+    author: "James Lee", authorColor: "#3b82f6", date: "Apr 18, 2026", read: "4 min read",
+    body: `
+      <p>Every creator hits a wall. The blank page stares back at you and your mind goes completely empty. Here are 10 proven content ideas that work in almost any niche, any day of the week.</p>
+      <h2>The idea list</h2>
+      <ul>
+        <li>Answer a FAQ — Go to your DMs or comments and pick the most common question you get asked. Answer it thoroughly.</li>
+        <li>Share a mistake — Talk about something you got wrong early on and what you learned. Audiences love vulnerability and real stories.</li>
+        <li>React to a trend — Find a trending topic in your niche and give your unique opinion or take on it.</li>
+        <li>Behind the scenes — Show your workspace, your routine, your process. People are fascinated by how creators actually work.</li>
+        <li>Then vs now — Share your journey. Where were you a year ago versus where you are now?</li>
+        <li>Tool or resource recommendation — Share your three favourite tools, apps, or books for your niche.</li>
+        <li>Myth-busting post — Pick a common misconception in your niche and debunk it with facts and your experience.</li>
+        <li>Day in the life — Document a single day in your life as a creator. Raw and unfiltered always performs well.</li>
+        <li>Community question — Ask your audience a question. This drives comments and the responses become your next week of content.</li>
+        <li>Repurpose your best post — Take your highest-performing post from 6 months ago and recreate it in a different format.</li>
+      </ul>
+      <h2>The key insight</h2>
+      <p>You will never truly run out of content ideas. The trick is to build a system for capturing ideas when they come to you, not when you are sitting down to create.</p>
+    `,
+  },
+  {
+    slug: "find-perfect-niche-2026",
+    cat: "Productivity", catColor: "#10b981", emoji: "🎯",
+    title: "How to Find Your Perfect Niche in 2026",
+    excerpt: "The biggest mistake new creators make is trying to appeal to everyone.",
+    author: "Ahmed Malik", authorColor: "#8b5cf6", date: "Apr 14, 2026", read: "6 min read",
+    body: `
+      <p>The biggest mistake new creators make is trying to appeal to everyone. When you speak to everyone, you connect with no one. Finding your niche is the single most important decision you will make as a creator.</p>
+      <h2>The three-circle method</h2>
+      <p>Your perfect niche sits at the intersection of three things: what you are passionate about, what you are knowledgeable about, and what people are actively searching for. If you only have two of the three, your niche will eventually fail.</p>
+      <h2>How to validate your niche</h2>
+      <ul>
+        <li>Search your topic on YouTube and look for channels with over 100K subscribers</li>
+        <li>Check if there are active communities on Reddit or Facebook about it</li>
+        <li>Look for courses or books being sold about this topic</li>
+        <li>See if there are brands spending money on influencers in this space</li>
+      </ul>
+      <h2>Niche down further than you think</h2>
+      <p>Do not be a fitness creator. Be a fitness creator for busy mothers over 40. Do not be a travel creator. Be a budget travel creator for solo travellers in Southeast Asia. The more specific you are, the faster you will grow.</p>
+      <h2>When to expand</h2>
+      <p>Once you have 50,000 followers in a specific niche, you can start to expand. But in the beginning, specificity is your greatest advantage.</p>
+    `,
+  },
+  {
+    slug: "metrics-that-matter-audience-growth",
+    cat: "AI Tools", catColor: "#f59e0b", emoji: "📊",
+    title: "Which Metrics Actually Matter for Growing Your Audience?",
+    excerpt: "Most creators obsess over the wrong numbers. Follower count is one of the least useful metrics.",
+    author: "Sara Khan", authorColor: "#10b981", date: "Apr 10, 2026", read: "5 min read",
+    body: `
+      <p>Most creators obsess over the wrong numbers. Follower count feels important but it is actually one of the least useful metrics for understanding whether your content strategy is working.</p>
+      <h2>Engagement rate — the most important metric</h2>
+      <p>Engagement rate is your total engagements divided by your reach, expressed as a percentage. A healthy engagement rate is 3 to 6 percent on Instagram, 5 to 10 percent on TikTok. If yours is below this, your content is reaching people but not resonating.</p>
+      <h2>Saves and shares over likes</h2>
+      <p>Saves tell you that someone found your content valuable enough to come back to. Shares tell you they trusted it enough to put their name on it and send it to others. These two metrics are far more powerful signals than likes for algorithm growth.</p>
+      <ul>
+        <li>High saves means educational or reference content is landing well</li>
+        <li>High shares means your content is emotionally resonant or extremely useful</li>
+        <li>High comments means you are sparking conversation which boosts reach</li>
+      </ul>
+      <h2>Watch time and completion rate</h2>
+      <p>For video content, completion rate is everything. If people watch your entire video, the algorithm takes that as a signal to push it to more people. Hook the first 3 seconds, deliver value fast, and always end with a clear call to action.</p>
+      <h2>How often to check</h2>
+      <p>Check your analytics every two weeks, not every day. Daily checking leads to emotional decision-making. Fortnightly reviews let you spot actual patterns and make strategic improvements.</p>
+    `,
+  },
+];
 
-const POSTS: Record<string, {
-  category: string; categoryColor: string; categoryBg: string;
-  title: string; author: string; authorInitial: string; authorColor: string;
-  date: string; readTime: string; content: string[];
-}> = {
-  "how-to-grow-instagram-2024": {
-    category: "Instagram", categoryColor: "#38bdf8", categoryBg: "rgba(56,189,248,0.12)",
-    title: "How to Grow Your Instagram to 10K Followers in 90 Days",
-    author: "Sara Khan", authorInitial: "S", authorColor: "#0ea5e9",
-    date: "Apr 28, 2025", readTime: "7 min read",
-    content: [
-      "Growing an Instagram account from zero to 10,000 followers used to take years. Today, with the right content strategy and AI tools, it is achievable in 90 days — without spending a single dollar on ads.",
-      "The secret is consistency and relevance. Instagram's algorithm rewards accounts that post regularly in a specific niche. The more focused your content, the faster the algorithm understands who to show it to.",
-      "## Step 1: Define Your Niche Ruthlessly",
-      "Vague niches like 'fitness' or 'food' are too broad. Instead, go hyper-specific: 'vegan meal prep for busy moms' or 'home workouts for people over 40'. The narrower your niche, the faster you grow because you become the go-to account for that specific audience.",
-      "## Step 2: Build a 7-Day Content Calendar",
-      "Posting randomly is the biggest mistake new creators make. A structured 7-day calendar ensures you cover different content types — educational, inspirational, entertaining, and promotional — in a balanced rotation. Tools like NichePost AI can generate this entire calendar in 20 seconds.",
-      "## Step 3: Optimize Every Caption",
-      "Your caption is as important as your image. Lead with a hook in the first line — something that makes people stop scrolling. Ask a question, make a bold statement, or share a surprising fact. Always end with a clear call to action.",
-      "## Step 4: Use Hashtags Strategically",
-      "Use 5-10 highly relevant hashtags per post. Mix large hashtags (1M+ posts) with medium ones (100K-500K) and small niche ones (under 50K). Small niche hashtags are where you will actually get discovered by your target audience.",
-      "## Step 5: Engage Before and After Posting",
-      "Spend 30 minutes engaging with accounts in your niche before you post, and reply to every comment within the first hour of publishing. This signals to the algorithm that your account is active and worth promoting.",
-      "Following this system consistently for 90 days is what separates accounts that grow from accounts that stagnate. The work is simple — the key is showing up every single day.",
-    ],
-  },
-  "tiktok-content-strategy": {
-    category: "TikTok", categoryColor: "#5eead4", categoryBg: "rgba(94,234,212,0.1)",
-    title: "The TikTok Content Strategy That Gets Views in 2025",
-    author: "James Lee", authorInitial: "J", authorColor: "#2563eb",
-    date: "Apr 22, 2025", readTime: "5 min read",
-    content: [
-      "TikTok's algorithm has evolved dramatically. What worked in 2023 — dance trends, lip syncs, and random viral attempts — barely registers today. In 2025, the platform rewards depth, niche authority, and retention.",
-      "## The Hook is Everything",
-      "You have 1.5 seconds to stop someone from swiping. Your opening frame needs to answer the question 'why should I keep watching?' immediately. Use text overlays, direct address, or a surprising visual in the first second.",
-      "## Niche Down Hard",
-      "TikTok's algorithm is a niche machine. The more consistently you post in one niche, the more aggressively the algorithm distributes your content to interested users. Switching topics confuses the algorithm and tanks your reach.",
-      "## Retention Over Views",
-      "A video with 10,000 views and 80% watch time is better than 100,000 views at 20% watch time. The algorithm prioritizes completion rate. Keep videos concise, cut every second of dead air, and end with a reason to watch again.",
-      "## Post Timing Still Matters",
-      "Post when your audience is active. For most niches, early morning (6-9 AM) and evening (7-10 PM) in your target timezone perform best. Use TikTok Analytics to confirm your specific audience's peak hours.",
-      "The creators winning on TikTok in 2025 are not the ones chasing trends. They are the ones who own a niche, post consistently, and obsess over the quality of their hooks and retention.",
-    ],
-  },
-  "ai-content-creation-guide": {
-    category: "AI Tools", categoryColor: "#fcd34d", categoryBg: "rgba(252,211,77,0.1)",
-    title: "The Complete Guide to AI Content Creation for Social Media",
-    author: "Sara Khan", authorInitial: "S", authorColor: "#0ea5e9",
-    date: "Apr 10, 2025", readTime: "10 min read",
-    content: [
-      "AI has fundamentally changed how content creators work. What used to take a content team an entire week — brainstorming, writing, editing, scheduling — can now be done by a solo creator in under an hour.",
-      "## What AI Can Do For You",
-      "AI content tools can generate captions, hashtags, post ideas, content calendars, and even images. The best ones understand your niche, tone, and platform — and produce content that sounds like you, not like a robot.",
-      "## What AI Cannot Replace",
-      "AI cannot replace your personal stories, your unique perspective, or your authentic relationships with your audience. Use AI to handle the mechanical work of content creation so you can focus on what only you can do: being human.",
-      "## The Right Workflow",
-      "The most effective approach is to use AI to generate a first draft and then edit it to match your voice. Generate a 7-day calendar in seconds, review each post, add a personal touch, and schedule. This cuts content creation time by 80%.",
-      "## Choosing the Right Tool",
-      "Look for tools that understand your specific niche and platform. Generic AI will produce generic content. NichePost AI, for example, takes your niche, platform, and tone as inputs to generate platform-native content that actually performs.",
-      "AI is not a shortcut to skip the work of building an audience. It is a tool that lets you do more of the right work — showing up consistently with quality content — without burning out.",
-    ],
-  },
-  "hashtag-strategy-2025": {
-    category: "Strategy", categoryColor: "#34d399", categoryBg: "rgba(52,211,153,0.1)",
-    title: "Hashtag Strategy in 2025: What Works and What Doesn't",
-    author: "James Lee", authorInitial: "J", authorColor: "#2563eb",
-    date: "Apr 3, 2025", readTime: "6 min read",
-    content: [
-      "Hashtags are not dead. But the way most creators use them is. Copying the same 30 hashtags on every post, using maxed-out tags like #love or #instagood, and treating hashtags as an afterthought — these practices no longer work.",
-      "## What Actually Works in 2025",
-      "Use 5-10 targeted hashtags rather than 30 generic ones. Each hashtag should describe either your content, your audience, or your niche. The goal is discoverability, not volume.",
-      "## The Size Mix",
-      "Combine hashtags of different sizes. Large tags (over 1M posts) expose you to huge audiences but you will be buried quickly. Medium tags (100K-500K) offer a balance of reach and longevity. Small niche tags (under 50K) are where you can actually rank and get found by highly targeted followers.",
-      "## Platform Differences",
-      "Instagram still benefits from hashtags, though their importance has decreased since the introduction of keyword search. TikTok hashtags are primarily for category classification, not discovery. LinkedIn hashtags help with topic feeds but should be used sparingly.",
-      "## Research Your Hashtags",
-      "Before using a hashtag, check what content is actually performing under it. If the top posts do not look like your content, the hashtag's audience is not your audience. Match hashtags to your content, not just your topic.",
-      "The creators who use hashtags strategically treat them like SEO keywords — researched, targeted, and reviewed regularly. That is the difference between hashtags that drive growth and hashtags that do nothing.",
-    ],
-  },
-  "linkedin-thought-leadership": {
-    category: "LinkedIn", categoryColor: "#7dd3fc", categoryBg: "rgba(125,211,252,0.12)",
-    title: "LinkedIn Thought Leadership: How to Get 100K Impressions Per Post",
-    author: "Ahmed Malik", authorInitial: "A", authorColor: "#f59e0b",
-    date: "Apr 15, 2025", readTime: "8 min read",
-    content: [
-      "LinkedIn organic reach is the best it has ever been for individual creators — and most people are completely wasting it. While brands struggle to get 500 impressions, individual thought leaders are routinely hitting 100,000+ on a single post.",
-      "## The Format That Works",
-      "LinkedIn rewards text-heavy content that tells a story or shares a lesson. The ideal format: a strong opening line (no 'I am excited to share'), followed by a short story or insight, broken into single-sentence paragraphs for readability, ending with a question or takeaway.",
-      "## The First Line is Critical",
-      "LinkedIn shows only the first 2 lines before the 'see more' button. Your opening line must be so compelling that readers have no choice but to click. Share a counterintuitive insight, a surprising number, or a bold opinion.",
-      "## Consistency Compounds",
-      "LinkedIn's algorithm rewards consistent posting. Posting 3-5 times per week builds algorithmic momentum. Your 50th post will always outperform your 5th, even if the content is similar, because your account authority has grown.",
-      "## Engage Like a Human",
-      "Reply to every comment in the first two hours. Comment on other posts in your niche before and after posting. LinkedIn is a conversation platform — accounts that engage generously get distributed generously.",
-      "LinkedIn thought leadership is not about being the smartest person in the room. It is about sharing what you have learned, consistently and generously, until the algorithm and the community recognize you as a trusted voice.",
-    ],
-  },
-  "content-calendar-for-creators": {
-    category: "Productivity", categoryColor: "#93c5fd", categoryBg: "rgba(147,197,253,0.1)",
-    title: "Why Every Creator Needs a 7-Day Content Calendar",
-    author: "Ahmed Malik", authorInitial: "A", authorColor: "#f59e0b",
-    date: "Mar 28, 2025", readTime: "4 min read",
-    content: [
-      "The number one reason creators fail to grow is inconsistency. Not bad content. Not the wrong niche. Inconsistency. A 7-day content calendar is the simplest, most effective tool for solving this problem.",
-      "## Why Planning Works",
-      "When you plan content in advance, you eliminate decision fatigue. You are not staring at your phone at 8 PM wondering what to post. You already know. You just execute.",
-      "## The 7-Day Structure",
-      "A balanced 7-day calendar should cover educational content (how-to, tips), inspirational content (stories, quotes), entertaining content (relatable moments, humor), and promotional content (your product or service). Varying the content type keeps your audience engaged across the full week.",
-      "## Batch Creation",
-      "Create all 7 posts in one sitting. Write all the captions, gather all the images, prepare all the hashtags. Batching reduces the mental overhead of content creation and ensures a consistent quality across the week.",
-      "## Use AI to Speed Up the Process",
-      "Tools like NichePost AI can generate a full 7-day calendar — captions, hashtags, and all — in 20 seconds. Review, edit to add your personal touch, and schedule. The entire process takes under 30 minutes.",
-      "A content calendar is not a creative constraint. It is creative freedom. When the structure is handled, you can focus entirely on the quality of your ideas and the authenticity of your voice.",
-    ],
-  },
-};
+export function generateStaticParams() {
+  return BLOGS.map(b => ({ slug: b.slug }));
+}
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const post = POSTS[slug];
-
-  if (!post) {
-    return (
-      <div style={{ minHeight: "100vh", background: "#050d1a", color: "#f8fafc", fontFamily: "-apple-system, sans-serif", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16, padding: "0 20px", textAlign: "center" }}>
-        <div style={{ fontSize: 48 }}>📭</div>
-        <div style={{ fontSize: 22, fontWeight: 700 }}>Post not found</div>
-        <Link href="/blog" style={{ fontSize: 14, color: "#7dd3fc", textDecoration: "none" }}>← Back to blog</Link>
-      </div>
-    );
-  }
+export default function BlogPost({ params }: { params: { slug: string } }) {
+  const blog = BLOGS.find(b => b.slug === params.slug);
+  if (!blog) notFound();
 
   return (
-    <div style={{ minHeight: "100vh", background: "#050d1a", color: "#f8fafc", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
-
-      <style>{`
-        @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-        @keyframes gradientShift { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-        @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
-        @keyframes borderGlow { 0%,100%{border-color:rgba(14,165,233,0.25);} 50%{border-color:rgba(125,211,252,0.6);} }
-
-        .nav-back { transition: all 0.2s ease; }
-        .nav-back:hover { color: #7dd3fc !important; transform: translateX(-4px); }
-
-        .try-btn { position:relative; overflow:hidden; transition: all 0.3s ease !important; }
-        .try-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent); transition:left 0.5s; }
-        .try-btn:hover::before { left:100%; }
-        .try-btn:hover { transform:translateY(-2px) !important; box-shadow:0 10px 28px rgba(14,165,233,0.45) !important; }
-
-        .post-cta { animation: borderGlow 4s ease-in-out infinite; }
-
-        .cta-btn { position:relative; overflow:hidden; transition:all 0.3s ease !important; }
-        .cta-btn::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent); transition:left 0.5s; }
-        .cta-btn:hover::before { left:100%; }
-        .cta-btn:hover { transform:translateY(-3px) !important; box-shadow:0 12px 32px rgba(14,165,233,0.5) !important; }
-
-        .back-link { transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px; }
-        .back-link:hover { color: #7dd3fc !important; }
-
-        .author-block { transition: transform 0.2s ease; }
-        .author-block:hover { transform: translateX(4px); }
-
-        .avatar-ring { transition: all 0.25s ease; flex-shrink: 0; }
-        .avatar-ring:hover { transform: scale(1.08); box-shadow: 0 0 16px rgba(14,165,233,0.5); }
-
-        .content-h2 { position: relative; padding-left: 16px; }
-        .content-h2::before { content:''; position:absolute; left:0; top:50%; transform:translateY(-50%); width:3px; height:70%; border-radius:2px; background:linear-gradient(135deg,#0ea5e9,#2563eb); }
-
-        .progress-bar { position:fixed; top:0; left:0; height:2px; background:linear-gradient(90deg,#0ea5e9,#2563eb,#7dd3fc); z-index:100; transition:width 0.1s; }
-
-        .headline-grad {
-          background: linear-gradient(135deg, #f8fafc 0%, #7dd3fc 50%, #93c5fd 100%);
-          background-size: 200% 200%;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          animation: gradientShift 6s ease infinite;
-        }
-
-        .tag-chip { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; font-size:11px; font-weight:600; transition: all 0.2s; cursor:default; border-radius:999px; }
-        .tag-chip:hover { transform:translateY(-2px); }
-
-        .share-btn { transition: all 0.2s ease; }
-        .share-btn:hover { background: rgba(14,165,233,0.15) !important; border-color: rgba(14,165,233,0.4) !important; color: #7dd3fc !important; }
-
-        /* ── RESPONSIVE ── */
-        .post-nav { padding: 0 48px; height: 68px; }
-        .post-nav-logo-text { display: inline; }
-        .post-body { max-width: 720px; margin: 0 auto; padding: 56px 40px 80px; }
-        .post-title { font-size: 40px; }
-        .author-tags { display: flex; }
-        .share-row { flex-direction: row; }
-        .share-btns { display: flex; }
-        .cta-inner { padding: 40px 32px; }
-
-        @media (max-width: 768px) {
-          .post-nav { padding: 0 20px !important; height: 60px !important; }
-          .post-body { padding: 36px 20px 60px !important; }
-          .post-title { font-size: 28px !important; }
-          .author-tags { display: none !important; }
-          .cta-inner { padding: 28px 20px !important; }
-          .cta-inner h2 { font-size: 18px !important; }
-          .share-row { flex-direction: column !important; gap: 12px !important; align-items: flex-start !important; }
-        }
-
-        @media (max-width: 560px) {
-          .post-nav-logo-text { display: none !important; }
-          .post-nav { padding: 0 14px !important; }
-          .post-body { padding: 28px 14px 48px !important; }
-          .post-title { font-size: 24px !important; }
-          .try-btn { padding: 7px 12px !important; font-size: 12px !important; }
-          .share-btns { flex-wrap: wrap !important; gap: 6px !important; }
-          .share-btn { padding: 6px 10px !important; font-size: 11px !important; }
-          .cta-btn { padding: 11px 20px !important; font-size: 13px !important; }
-          .post-meta { flex-wrap: wrap; gap: 6px !important; }
-        }
-
-        @media (max-width: 400px) {
-          .post-title { font-size: 21px !important; }
-          .post-body { padding: 24px 12px 40px !important; }
-          .cta-inner { padding: 22px 14px !important; }
-        }
-      `}</style>
-
-      {/* Reading progress bar */}
-      <div id="progress" className="progress-bar" style={{ width: "0%" }} />
-      <script dangerouslySetInnerHTML={{ __html: `
-        window.addEventListener('scroll', function() {
-          var el = document.getElementById('progress');
-          if (!el) return;
-          var scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
-          el.style.width = Math.min(scrolled, 100) + '%';
-        });
-      `}} />
+    <div style={{
+      minHeight: "100vh",
+      background: "#080c14",
+      fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+    }}>
 
       {/* NAV */}
-      <div className="post-nav" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderBottom: "1px solid rgba(14,165,233,0.1)", background: "rgba(5,13,26,0.96)", position: "sticky", top: 0, zIndex: 30, backdropFilter: "blur(20px)" }}>
-        <Link href="/blog" className="nav-back" style={{ fontSize: 14, color: "rgba(255,255,255,0.42)", display: "flex", alignItems: "center", gap: 7, textDecoration: "none", fontWeight: 500, flexShrink: 0 }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          Blog
-        </Link>
-        <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
-          <div style={{ width: 30, height: 30, borderRadius: 9, background: "linear-gradient(135deg,#0ea5e9,#2563eb)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 12px rgba(14,165,233,0.4)", flexShrink: 0 }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          </div>
-          <span className="post-nav-logo-text" style={{ fontWeight: 700, fontSize: 15, letterSpacing: "-0.01em", whiteSpace: "nowrap" }}>NichePost <span style={{ color: "#7dd3fc" }}>AI</span></span>
-        </div>
-        <Link href="/generate" className="try-btn" style={{ fontSize: 13, fontWeight: 700, padding: "8px 18px", borderRadius: 10, background: "linear-gradient(135deg,#0ea5e9,#2563eb)", color: "#fff", textDecoration: "none", boxShadow: "0 4px 12px rgba(14,165,233,0.35)", flexShrink: 0, whiteSpace: "nowrap" }}>
-          Try Free →
-        </Link>
-      </div>
-
-      <div className="post-body">
-
-        {/* Category + meta */}
-        <div className="post-meta" style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18, animation: "fadeUp 0.6s ease-out both", flexWrap: "wrap" }}>
-          <span style={{ fontSize: 10, fontWeight: 700, padding: "4px 12px", borderRadius: 999, background: post.categoryBg, color: post.categoryColor, border: `1px solid ${post.categoryColor}40`, letterSpacing: "0.06em", textTransform: "uppercase", flexShrink: 0 }}>
-            {post.category}
+      <nav style={{
+        background: "rgba(8,12,20,0.98)",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+        backdropFilter: "blur(20px)",
+        position: "sticky", top: 0, zIndex: 100,
+        padding: "0 40px", height: 64,
+        display: "flex", alignItems: "center",
+        justifyContent: "space-between",
+      }}>
+        <a href="/" style={{
+          display: "flex", alignItems: "center", gap: 10,
+          textDecoration: "none",
+        }}>
+          <div style={{
+            width: 32, height: 32, borderRadius: 8,
+            background: "linear-gradient(135deg, #3b82f6, #6366f1)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 15, color: "#fff", fontWeight: 800,
+          }}>⚡</div>
+          <span style={{ fontSize: 18, fontWeight: 800, color: "#fff" }}>
+            NichePost <span style={{
+              background: "linear-gradient(135deg, #3b82f6, #a78bfa)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}>AI</span>
           </span>
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>{post.date}</span>
-          <span style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(255,255,255,0.2)", display: "inline-block", flexShrink: 0 }} />
-          <span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", display: "flex", alignItems: "center", gap: 5 }}>
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            {post.readTime}
-          </span>
+        </a>
+        <a href="/#blog" style={{
+          background: "rgba(59,130,246,0.1)", color: "#60a5fa",
+          border: "1px solid rgba(59,130,246,0.25)",
+          borderRadius: 10, padding: "8px 18px",
+          fontSize: 13, fontWeight: 700,
+          textDecoration: "none",
+          display: "inline-flex", alignItems: "center", gap: 6,
+        }}>
+          ← Back to Blog
+        </a>
+      </nav>
+
+      {/* HERO */}
+      <div style={{
+        maxWidth: 800, margin: "0 auto",
+        padding: "56px 40px 40px",
+        borderBottom: "1px solid rgba(255,255,255,0.06)",
+      }}>
+
+        {/* CAT BADGE */}
+        <div style={{
+          display: "inline-flex", marginBottom: 20,
+          background: `${blog.catColor}15`,
+          border: `1px solid ${blog.catColor}35`,
+          borderRadius: 100, padding: "5px 14px",
+          fontSize: 11, fontWeight: 700,
+          color: blog.catColor, letterSpacing: "0.08em",
+        }}>
+          {blog.cat.toUpperCase()}
         </div>
 
-        {/* Title */}
-        <h1 className="headline-grad post-title" style={{ fontWeight: 800, letterSpacing: "-0.025em", lineHeight: 1.2, marginBottom: 24, animation: "fadeUp 0.7s ease-out 0.1s both" }}>
-          {post.title}
-        </h1>
+        {/* TITLE */}
+        <h1 style={{
+          fontSize: "clamp(26px, 4vw, 40px)",
+          fontWeight: 800, lineHeight: 1.12,
+          color: "#fff", marginBottom: 20,
+          letterSpacing: "-1px",
+        }}>{blog.title}</h1>
 
-        {/* Author */}
-        <div className="author-block" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 36, paddingBottom: 24, borderBottom: "1px solid rgba(14,165,233,0.1)", animation: "fadeUp 0.6s ease-out 0.2s both", flexWrap: "wrap" }}>
-          <div className="avatar-ring" style={{ width: 40, height: 40, borderRadius: "50%", background: post.authorColor, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 15, fontWeight: 700, color: "#fff", border: "2px solid rgba(14,165,233,0.2)" }}>
-            {post.authorInitial}
+        {/* EXCERPT */}
+        <p style={{
+          fontSize: 18, color: "#8896b3",
+          lineHeight: 1.75, marginBottom: 28,
+        }}>{blog.excerpt}</p>
+
+        {/* AUTHOR ROW */}
+        <div style={{
+          display: "flex", alignItems: "center",
+          gap: 12, paddingTop: 20,
+          borderTop: "1px solid rgba(255,255,255,0.06)",
+        }}>
+          <div style={{
+            width: 42, height: 42, borderRadius: "50%",
+            background: `linear-gradient(135deg, ${blog.authorColor}, ${blog.authorColor}88)`,
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 16, fontWeight: 800, color: "#fff",
+          }}>
+            {blog.author[0]}
           </div>
           <div>
-            <div style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.85)" }}>{post.author}</div>
-            <div style={{ fontSize: 12, color: "rgba(255,255,255,0.3)" }}>Content Strategist at NichePost AI</div>
-          </div>
-          <div className="author-tags" style={{ marginLeft: "auto", gap: 6, flexWrap: "wrap" }}>
-            {[post.category, "Social Media", "Growth"].map(tag => (
-              <span key={tag} className="tag-chip" style={{ background: post.categoryBg, color: post.categoryColor, border: `1px solid ${post.categoryColor}30` }}>
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Content */}
-        <div style={{ animation: "fadeUp 0.7s ease-out 0.3s both" }}>
-          {post.content.map((block, i) => {
-            if (block.startsWith("## ")) {
-              return (
-                <h2 key={i} className="content-h2" style={{ fontSize: 20, fontWeight: 700, letterSpacing: "-0.015em", marginTop: 36, marginBottom: 12, color: "#f8fafc", lineHeight: 1.3 }}>
-                  {block.replace("## ", "")}
-                </h2>
-              );
-            }
-            if (i === 0) {
-              return (
-                <p key={i} style={{ fontSize: 17, color: "rgba(255,255,255,0.72)", lineHeight: 1.8, marginBottom: 20, fontWeight: 400 }}>
-                  {block}
-                </p>
-              );
-            }
-            return (
-              <p key={i} style={{ fontSize: 15, color: "rgba(255,255,255,0.6)", lineHeight: 1.85, marginBottom: 18 }}>
-                {block}
-              </p>
-            );
-          })}
-        </div>
-
-        {/* Share row */}
-        <div className="share-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 44, paddingTop: 24, borderTop: "1px solid rgba(14,165,233,0.1)", animation: "fadeUp 0.6s ease-out 0.4s both", gap: 12 }}>
-          <div style={{ fontSize: 13, color: "rgba(255,255,255,0.35)", fontWeight: 500, flexShrink: 0 }}>Share this article</div>
-          <div className="share-btns" style={{ display: "flex", gap: 8 }}>
-            {["Twitter", "LinkedIn", "Copy link"].map(s => (
-              <button key={s} className="share-btn"
-                style={{ padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, background: "rgba(14,165,233,0.06)", border: "1px solid rgba(14,165,233,0.15)", color: "rgba(255,255,255,0.55)", cursor: "pointer", fontFamily: "inherit", whiteSpace: "nowrap" }}>
-                {s}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="post-cta" style={{ marginTop: 44, borderRadius: 20, background: "linear-gradient(135deg,rgba(14,165,233,0.18),rgba(37,99,235,0.1))", border: "1px solid rgba(14,165,233,0.25)", animation: "fadeUp 0.7s ease-out 0.5s both", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "2px", background: "linear-gradient(90deg,transparent,rgba(125,211,252,0.6),transparent)", animation: "shimmer 3s ease-in-out infinite", backgroundSize: "200% 100%" }} />
-          <div className="cta-inner" style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 11, fontWeight: 700, padding: "4px 14px", borderRadius: 999, background: "rgba(14,165,233,0.15)", border: "1px solid rgba(14,165,233,0.3)", color: "#7dd3fc", display: "inline-block", marginBottom: 14, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-              ✦ Free to use
-            </div>
-            <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 8, letterSpacing: "-0.02em", lineHeight: 1.3 }}>
-              Ready to put this into practice?
-            </h2>
-            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.45)", marginBottom: 20, lineHeight: 1.65 }}>
-              Generate your full 7-day content calendar in 20 seconds — free, no signup needed.
+            <p style={{ fontSize: 15, fontWeight: 700, color: "#fff", margin: 0 }}>
+              {blog.author}
             </p>
-            <Link href="/generate" className="cta-btn" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 26px", borderRadius: 13, fontSize: 14, fontWeight: 700, color: "#fff", background: "linear-gradient(135deg,#0ea5e9,#2563eb)", textDecoration: "none", boxShadow: "0 8px 24px rgba(14,165,233,0.4)" }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-              Generate My Free Calendar
-            </Link>
+            <p style={{ fontSize: 13, color: "#60a5fa", margin: 0 }}>
+              {blog.date} · {blog.read}
+            </p>
           </div>
         </div>
+      </div>
 
-        {/* Back link */}
-        <div style={{ marginTop: 36, textAlign: "center" }}>
-          <Link href="/blog" className="back-link" style={{ fontSize: 13, color: "rgba(255,255,255,0.28)", textDecoration: "none", fontWeight: 500 }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Back to all articles
-          </Link>
+      {/* BODY */}
+      <div style={{ maxWidth: 800, margin: "0 auto", padding: "48px 40px 80px" }}
+        dangerouslySetInnerHTML={{
+          __html: blog.body
+            .replace(/<h2>/g, `<h2 style="font-size:24px;color:#fff;margin:36px 0 16px;font-weight:700;letter-spacing:-0.3px;line-height:1.2;">`)
+            .replace(/<p>/g, `<p style="font-size:17px;color:#8896b3;line-height:1.9;margin-bottom:22px;">`)
+            .replace(/<ul>/g, `<ul style="padding-left:28px;margin-bottom:24px;list-style:disc;">`)
+            .replace(/<li>/g, `<li style="font-size:16px;color:#8896b3;line-height:1.8;margin-bottom:10px;">`)
+        }}
+      />
+
+      {/* BOTTOM CTA */}
+      <div style={{
+        maxWidth: 800, margin: "0 auto",
+        padding: "0 40px 80px",
+      }}>
+        <div style={{
+          background: "linear-gradient(135deg, rgba(59,130,246,0.1), rgba(99,102,241,0.1))",
+          border: "1px solid rgba(59,130,246,0.2)",
+          borderRadius: 20, padding: "36px 32px",
+          textAlign: "center",
+        }}>
+          <div style={{ fontSize: 36, marginBottom: 12 }}>⚡</div>
+          <h3 style={{
+            fontSize: 22, fontWeight: 800, color: "#fff",
+            marginBottom: 10, letterSpacing: "-0.3px",
+          }}>
+            Ready to generate your 7-day calendar?
+          </h3>
+          <p style={{
+            fontSize: 15, color: "#8896b3", marginBottom: 20, lineHeight: 1.6,
+          }}>
+            Stop staring at a blank page. NichePost AI creates your full week of content in seconds.
+          </p>
+          <a href="/#generator" style={{
+            background: "linear-gradient(135deg, #3b82f6, #6366f1)",
+            color: "#fff", textDecoration: "none",
+            borderRadius: 12, padding: "13px 28px",
+            fontSize: 15, fontWeight: 700,
+            display: "inline-flex", alignItems: "center", gap: 8,
+            boxShadow: "0 6px 24px rgba(59,130,246,0.4)",
+          }}>
+            ⚡ Try Free Now →
+          </a>
         </div>
-
       </div>
     </div>
   );
